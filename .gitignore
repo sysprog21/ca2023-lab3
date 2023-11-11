@@ -199,3 +199,6 @@ verilog/verilator/*
 .Xil
 .vscode
 .metals
+.bloop/
+project/project/
+project/metals.sbt

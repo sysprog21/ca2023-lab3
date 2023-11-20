@@ -30,22 +30,16 @@ class MemoryAccess extends Module {
 
   when(io.memory_read_enable) {
     val data = io.memory_bundle.read_data
-    io.wb_memory_read_data := MuxLookup(
-      io.funct3,
-      0.U,
+    io.wb_memory_read_data := MuxLookup(io.funct3, 0.U)(
       IndexedSeq(
-        InstructionsTypeL.lb -> MuxLookup(
-          mem_address_index,
-          Cat(Fill(24, data(31)), data(31, 24)),
+        InstructionsTypeL.lb -> MuxLookup(mem_address_index, Cat(Fill(24, data(31)), data(31, 24)))(
           IndexedSeq(
             0.U -> Cat(Fill(24, data(7)), data(7, 0)),
             1.U -> Cat(Fill(24, data(15)), data(15, 8)),
             2.U -> Cat(Fill(24, data(23)), data(23, 16))
           )
         ),
-        InstructionsTypeL.lbu -> MuxLookup(
-          mem_address_index,
-          Cat(Fill(24, 0.U), data(31, 24)),
+        InstructionsTypeL.lbu -> MuxLookup(mem_address_index, Cat(Fill(24, 0.U), data(31, 24)))(
           IndexedSeq(
             0.U -> Cat(Fill(24, 0.U), data(7, 0)),
             1.U -> Cat(Fill(24, 0.U), data(15, 8)),

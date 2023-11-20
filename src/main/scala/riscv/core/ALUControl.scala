@@ -19,9 +19,7 @@ class ALUControl extends Module {
 
   switch(io.opcode) {
     is(InstructionTypes.I) {
-      io.alu_funct := MuxLookup(
-        io.funct3,
-        ALUFunctions.zero,
+      io.alu_funct := MuxLookup(io.funct3, ALUFunctions.zero)(
         IndexedSeq(
           InstructionsTypeI.addi  -> ALUFunctions.add,
           InstructionsTypeI.slli  -> ALUFunctions.sll,
@@ -35,9 +33,7 @@ class ALUControl extends Module {
       )
     }
     is(InstructionTypes.RM) {
-      io.alu_funct := MuxLookup(
-        io.funct3,
-        ALUFunctions.zero,
+      io.alu_funct := MuxLookup(io.funct3, ALUFunctions.zero)(
         IndexedSeq(
           InstructionsTypeR.add_sub -> Mux(io.funct7(5), ALUFunctions.sub, ALUFunctions.add),
           InstructionsTypeR.sll     -> ALUFunctions.sll,

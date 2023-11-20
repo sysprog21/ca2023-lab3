@@ -43,9 +43,7 @@ class Execute extends Module {
   io.mem_alu_result := alu.io.result
   io.if_jump_flag := opcode === Instructions.jal ||
     (opcode === Instructions.jalr) ||
-    (opcode === InstructionTypes.B) && MuxLookup(
-      funct3,
-      false.B,
+    (opcode === InstructionTypes.B) && MuxLookup(funct3, false.B)(
       IndexedSeq(
         InstructionsTypeB.beq  -> (io.reg1_data === io.reg2_data),
         InstructionsTypeB.bne  -> (io.reg1_data =/= io.reg2_data),

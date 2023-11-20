@@ -147,9 +147,7 @@ class InstructionDecode extends Module {
 
   io.regs_reg1_read_address := Mux(opcode === Instructions.lui, 0.U(Parameters.PhysicalRegisterAddrWidth), rs1)
   io.regs_reg2_read_address := rs2
-  val immediate = MuxLookup(
-    opcode,
-    Cat(Fill(20, io.instruction(31)), io.instruction(31, 20)),
+  val immediate = MuxLookup(opcode, Cat(Fill(20, io.instruction(31)), io.instruction(31, 20)))(
     IndexedSeq(
       InstructionTypes.I -> Cat(Fill(21, io.instruction(31)), io.instruction(30, 20)),
       InstructionTypes.L -> Cat(Fill(21, io.instruction(31)), io.instruction(30, 20)),
